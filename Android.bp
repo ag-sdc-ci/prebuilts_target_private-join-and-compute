@@ -1,0 +1,78 @@
+// Auto-generated prebuilt APEX Blueprint for external/private-join-and-compute
+// Staged from Extractive APEX package: ext-private-join-and-compute (org.blisslabs.ag.ext.private-join-and-compute)
+
+package {
+    default_visibility: ["//visibility:private"],
+    default_applicable_licenses: ["libpjc_license"],
+}
+
+license {
+    name: "libpjc_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: ["LICENSE"],
+}
+
+filegroup {
+    name: "private-join-and-compute-proto",
+    srcs: [
+       "**/*.proto",
+    ],
+    visibility: ["//packages/modules/AdServices:__subpackages__"],
+}
+
+cc_library_headers {
+    name: "libpjc_third_party_libabsl_headers",
+    min_sdk_version: "30",
+    sdk_version: "current",
+    device_supported: true,
+    host_supported: true,
+    export_include_dirs: [
+        "third_party/abseil-cpp-20230125.2",
+    ],
+    apex_available: ["com.android.adservices", "com.android.extservices"],
+}
+
+cc_prebuilt_library_static {
+    name: "libpjc_third_party_libabsl",
+    min_sdk_version: "30",
+    sdk_version: "current",
+    host_supported: true,
+    visibility: [
+        "//external/anonymous-counting-tokens:__subpackages__",
+        "//packages/modules/AdServices/adservices/service-core",
+    ],
+    srcs: ["lib/libpjc_third_party_libabsl.a"],
+    export_include_dirs: [
+        "third_party/abseil-cpp-20230125.2",
+    ],
+    apex_available: ["com.android.adservices", "com.android.extservices"],
+}
+
+cc_prebuilt_library {
+    name: "libpjc_crypto",
+    min_sdk_version: "30",
+    sdk_version: "current",
+    visibility: [
+        "//external/anonymous-counting-tokens:__subpackages__",
+        "//packages/modules/AdServices/adservices/service-core",
+    ],
+    shared: {
+        srcs: ["lib/libpjc_crypto.so"],
+    },
+    static: {
+        srcs: ["lib/libpjc_crypto.a"],
+    },
+    export_include_dirs: [
+        "private_join_and_compute/crypto",
+        ".",
+    ],
+    shared_libs: [
+        "libcrypto",
+        "liblog",
+    ],
+    static_libs: [
+        "libpjc_third_party_libabsl",
+    ],
+    apex_available: ["com.android.adservices", "com.android.extservices"],
+}
